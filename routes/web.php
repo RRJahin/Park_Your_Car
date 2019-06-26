@@ -12,5 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $session = array('status'=>true);
+    return view('home')->with('session',$session);
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('Home');

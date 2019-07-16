@@ -136,7 +136,11 @@ function showPosition(position) {
     };
 
     map.setCenter(currentLocation);
+<<<<<<< HEAD
     map.setZoom(14);
+=======
+    map.setZoom(7);
+>>>>>>> 34148523e0b454bfd09b6d1a35feaa9c12a1ad9e
 
     addDraggableMarker(currentLocation, map, behavior);
 }

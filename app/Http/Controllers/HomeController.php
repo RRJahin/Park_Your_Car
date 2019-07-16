@@ -37,7 +37,6 @@ class HomeController extends Controller
             return redirect('/pplaces');
             // return view('dashboards.parkingPlaceOwner');
         } elseif ($role == 'Vehicle Owner') {
-
             $lat_lng = DB::table('p_places')->select('lat', 'lng')->get();
             //dd($lat_lng);
             return view('dashboards.vehicleOwner')->with('locations', $lat_lng);

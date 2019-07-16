@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,33 @@ class HomeController extends Controller
      */
     public function index()
     {
+        //dd('hello');
         return view('home');
+    }
+
+    public function userHome()
+    {
+        $id = auth()->user()->id;
+        $role = DB::table('users')->where('id', $id)->value('role');
+
+        if ($role == 'Parking Place Owner') {
+            return redirect('/pplaces');
+            // return view('dashboards.parkingPlaceOwner');
+        } elseif ($role == 'Vehicle Owner') {
+
+            $lat_lng = DB::table('p_places')->select('lat', 'lng')->get();
+            //dd($lat_lng);
+            return view('dashboards.vehicleOwner')->with('locations', $lat_lng);
+        } else {
+            return view('dashboards.admin');
+        }
+
+        // $pplaces = PPLace::all();
+        // $temp = DB::select('select * from users');
+        // //$temp1 = DB::table('users')->where('id', auth()->user()->id)->pluck('first_name');
+        // //$temp2 = DB::table('users')->where('id', auth()->user()->id)->pluck('last_name');
+        // //$comb = array('temp1'=> $temp1, 'temp2'=> $temp2, 'pplaces' => $pplaces);
+        // $comb = array('temp' => $temp, 'pplaces' => $pplaces, 'id' => auth()->user()->id);
+        // return view('pplaces.index')->with($comb);
     }
 }

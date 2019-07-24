@@ -18,12 +18,15 @@
         <h1>Add Place</h1>
         {!! Form::open(['id' => 'placeForm','name' => 'placeForm', 'action' => 'PPlacesController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         <div class="form-group">
+
             {{Form::label('address', 'Address')}}
             {{Form::text('address', '', ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Address'])}}
-            <!--{{Form::textarea('address', '', ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Address'])}}-->
+
             <input type="hidden" id="lat" name="lat" value="" />
             <input type="hidden" id="lng" name="lng" value="" />
+
             {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
+
         </div>
 
         {!! Form::close() !!}
@@ -84,6 +87,9 @@
         dragMarker.draggable = true;
         map.addObject(dragMarker);
 
+        document.placeForm.lat.value = dragMarker.getGeometry().lat;
+        document.placeForm.lng.value = dragMarker.getGeometry().lng;
+
         // disable the default draggability of the underlying map
         // when starting to drag a marker object:
         map.addEventListener('dragstart', function(ev) {
@@ -104,8 +110,6 @@
 
             document.placeForm.lat.value = dragMarker.getGeometry().lat;
             document.placeForm.lng.value = dragMarker.getGeometry().lng;
-            //$("input[name=lat]").val(dragMarker.getGeometry().lat);
-            //$("input[name=lng]").val(dragMarker.getGeometry().lng);
 
             console.log("Moaz");
         }, false);

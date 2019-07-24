@@ -54,6 +54,8 @@ class PPlacesController extends Controller
         // Create Post
         $post = new PPlace;
         $post->address = $request->input('address');
+        $post->lat = $request->input('lat');
+        $post->lng = $request->input('lng');
         $post->owner_id = auth()->user()->id;
         $post->save();
         return redirect('/pplaces')->with('success', 'Place Added');

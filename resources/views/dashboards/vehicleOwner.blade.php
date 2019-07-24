@@ -445,10 +445,10 @@
 
 
 
-        var content = '<strong style="font-size: large;">' + '' + '</strong></br>';
+        // var content = '<strong style="font-size: large;">' + '' + '</strong></br>';
 
         var content = '<br/><input type="text" id="auto-complete" placeholder="search" style="margin-left:5%; margin-right:5%; min-width:90%;background:inherit;border:2px solid #555;"  onkeyup="return autoCompleteListener(this, event);"><br/>';
-        content += '<br/><strong>Response:</strong><br/>';
+        // content += '<br/><strong>Response:</strong><br/>';
         content += '<div style="margin-left:5%; margin-right:5%;"><pre style="max-height:235px"><code  id="suggestions" style="font-size: small;">' + '</code></pre></div>';
 
         suggestionsContainer.innerHTML = content;

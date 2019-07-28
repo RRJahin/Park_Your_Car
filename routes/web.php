@@ -11,11 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    $session = array('status'=>true);
-    return view('home')->with('session',$session);
-});
+Route::get('/', 'WelcomeController@index');
+
+Route::get('/regAsVehicle', 'WelcomeController@regAsVehicle');
+
+Route::get('/regAsPPlace', 'WelcomeController@regAsPPlace');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('Home');
+Route::get('/home', 'HomeController@userHome');
+
+Route::resource('pplaces', 'PPlacesController');

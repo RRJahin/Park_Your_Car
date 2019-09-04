@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\PPlace;
+use App\PSpot;
 use DB;
 
 class PPlacesController extends Controller
@@ -21,7 +22,8 @@ class PPlacesController extends Controller
 
     public function index()
     {
-        $pplaces = PPLace::all();
+        //$pplaces = PPLace::find(auth()->user()->id)->toArray();
+        $pplaces = DB::table('p_places')->where('owner_id',auth()->user()->id)->get();
         $temp = DB::select('select * from users');
         //$temp1 = DB::table('users')->where('id', auth()->user()->id)->pluck('first_name');
         //$temp2 = DB::table('users')->where('id', auth()->user()->id)->pluck('last_name');
@@ -69,8 +71,13 @@ class PPlacesController extends Controller
      */
     public function show($id)
     {
-        $pplace = PPlace::find($id);
-        return view('pplaces.show')->with('pplace', $pplace);
+        //$pspot = DB::select('select * from p_spots where place_id = '.$id.'');
+        
+        $pspots = DB::table('p_spots')->where('place_id',$id)->get();
+        //return ($pspots);
+        $comb = array('pspots' => $pspots, 'id' => $id);
+        
+        return view('pplaces.show')->with($comb);
     }
 
     /**

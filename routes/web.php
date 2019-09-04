@@ -22,3 +22,9 @@ Auth::routes();
 Route::get('/home', 'HomeController@userHome');
 
 Route::resource('pplaces', 'PPlacesController');
+
+Route::get('/pspots/create/{id}', 'PSpotsController@create');
+
+Route::post('/pspots/store', 'PSpotsController@store');
+
+Route::resource('pspots', 'PSpotsController');

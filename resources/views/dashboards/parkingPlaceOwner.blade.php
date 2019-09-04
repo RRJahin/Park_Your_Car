@@ -10,7 +10,7 @@
             <div class="well">
                 <div class="row">
                     <div class="col-md-8 col-sm-8">
-                        <h3>{{$pplace->address}}</h3>
+                        <h3><a href="/pplaces/{{$pplace->id}}">{{$pplace->address}}</a></h3>
                         @foreach ($temp as $item)
                         @if ($item->id == $pplace->owner_id)
                         {{$item->first_name." ".$item->last_name}}

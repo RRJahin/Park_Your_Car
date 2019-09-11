@@ -107,19 +107,19 @@ CREATE TABLE REVIEW
 
 
 
-CREATE TABLE PARKING_SPOT
+CREATE TABLE p_spots
 (
-  SPOT_ID int,
-  PLACE_ID int,
-  RENT_VALUE int,
-  LOCATION varchar(255),
-  VEHICLE_TYPE varchar(255),
-  AVAILABILITY int,
-  
-  USER_REVIEW int,
-    
-  CONSTRAINT 	SPOT_PK PRIMARY KEY (SPOT_ID),
-  CONSTRAINT SPOTPLACE_FK FOREIGN KEY(PLACE_ID) REFERENCES PARKING_PLACE(PLACE_ID) 
+  id int,
+  place_id int,
+  rent_value int,
+  location varchar(255),
+  vehicle_type varchar(255),
+  availability int,
+  user_review int,
+  updated_at timestamp,
+  created_at timestamp,
+  CONSTRAINT 	SPOT_PK PRIMARY KEY (id),
+  CONSTRAINT SPOTPLACE_FK FOREIGN KEY(place_id) REFERENCES p_places(id) 
   
 );
 

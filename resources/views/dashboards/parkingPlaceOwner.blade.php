@@ -14,6 +14,12 @@
                         @foreach ($temp as $item)
                         @if ($item->id == $pplace->owner_id)
                         {{$item->first_name." ".$item->last_name}}
+
+                        {!!Form::open(['action' => ['PPlacesController@destroy', $pplace->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
+                            {{Form::hidden('_method', 'DELETE')}}
+                            {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                        {!!Form::close()!!}
+                        
                         @endif
                         @endforeach
                     </div>

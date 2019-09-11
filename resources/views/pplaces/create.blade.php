@@ -24,8 +24,11 @@
 
             <input type="hidden" id="lat" name="lat" value="" />
             <input type="hidden" id="lng" name="lng" value="" />
+            <br>
 
             {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
+            <br>
+            <br>
 
         </div>
 

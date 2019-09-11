@@ -37,19 +37,12 @@ class HomeController extends Controller
             return redirect('/pplaces');
             // return view('dashboards.parkingPlaceOwner');
         } elseif ($role == 'Vehicle Owner') {
-            $lat_lng = DB::table('p_places')->select('lat', 'lng')->get();
+            $locations = DB::table('p_places')->select('id','address','lat', 'lng')
+                                              ->whereNotNull('verified_by')->get();
             //dd($lat_lng);
-            return view('dashboards.vehicleOwner')->with('locations', $lat_lng);
+            return view('dashboards.vehicleOwner')->with('locations', $locations);
         } else {
             return view('dashboards.admin');
         }
-
-        // $pplaces = PPLace::all();
-        // $temp = DB::select('select * from users');
-        // //$temp1 = DB::table('users')->where('id', auth()->user()->id)->pluck('first_name');
-        // //$temp2 = DB::table('users')->where('id', auth()->user()->id)->pluck('last_name');
-        // //$comb = array('temp1'=> $temp1, 'temp2'=> $temp2, 'pplaces' => $pplaces);
-        // $comb = array('temp' => $temp, 'pplaces' => $pplaces, 'id' => auth()->user()->id);
-        // return view('pplaces.index')->with($comb);
     }
 }

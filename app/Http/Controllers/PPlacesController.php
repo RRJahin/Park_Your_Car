@@ -81,6 +81,23 @@ class PPlacesController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function view($id)
+    {
+        //$pspot = DB::select('select * from p_spots where place_id = '.$id.'');
+        
+        $pspots = DB::table('p_spots')->where('place_id',$id)->get();
+        //return ($pspots);
+        $comb = array('pspots' => $pspots, 'id' => $id);
+        
+        return view('pplaces.view')->with($comb);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id

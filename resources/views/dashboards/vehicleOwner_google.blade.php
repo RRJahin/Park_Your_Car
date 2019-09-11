@@ -233,18 +233,13 @@
       navigator.geolocation.getCurrentPosition(function(position) {
         // Center on user's current location if geolocation prompt allowed
         var initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        
-        var cur_marker = new google.maps.Marker({
-          position: initialLocation,
-          map: map
-        });
-        
         map.setCenter(initialLocation);
         map.setZoom(13);
       }, function(positionError) {
+        // User denied geolocation prompt - default to Chicago
         // Dhaka 23.8103° N, 90.4125° E
-        map.setCenter(new google.maps.LatLng(23.8103,90.4125));
-        map.setZoom(5);
+        gMap.setCenter(new google.maps.LatLng(23.8103,90.4125));
+        gMap.setZoom(5);
       });  
 
       var locations = <?php echo json_encode($locations); ?>;
@@ -255,34 +250,15 @@
       for (i = 0; i < locations.length; i=i+1) {
         marker = new google.maps.Marker({
           position: new google.maps.LatLng(locations[i].lat,locations[i].lng),
-          map: map,
-          icon: 'image/icon.png',
-          title: locations[i].address, // info window
-          url: locations[i].id // url to redirect when clicked
+          map: map
         });
 
-        // Marker mouse over event
-        google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
           return function() {
-            infowindow.setContent(marker.title);
+            infowindow.setContent("BUET,DHAKA");
             infowindow.open(map, marker);
           }
         })(marker, i));
-
-        // Marker mouse out event
-        google.maps.event.addListener(marker, 'mouseout', (function(marker, i) {
-          return function() {
-            infowindow.close();
-          }
-        })(marker, i));
-        
-        // Marker Click event 
-        google.maps.event.addListener(marker, 'click', (function(marker, i) {
-          return function() {
-            window.location.href = "/view/pplaces/" + marker.url;
-          }
-        })(marker, i));
-
       }
         var card = document.getElementById('pac-card');
         var input = document.getElementById('pac-input');

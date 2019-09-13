@@ -52,7 +52,7 @@
                         @else
                         <li>
 
-                            <a href="/pplaces/{{auth()->user()->id}}/edit">Edit Profile</a>
+                            <a href="/editProfile">Edit Profile</a>
                         </li>
                         <li>
 

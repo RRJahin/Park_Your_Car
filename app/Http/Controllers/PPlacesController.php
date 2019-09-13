@@ -106,10 +106,7 @@ class PPlacesController extends Controller
      */
     public function edit($id)
     {
-        $profile = User::find($id);
-        //return ($profile);
-
-        return view('pplaces.edit')->with('profile', $profile);
+        //
     }
 
     /**
@@ -121,13 +118,7 @@ class PPlacesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $profile = User::find($id);
-        $profile->first_name = $request->input('first_name');
-        $profile->last_name = $request->input('last_name');
-        $profile->phone = $request->input('phone');
-        $profile->save();
-        //return("Success");
-        return redirect('/pplaces')->with('success', 'Profile Updated');
+        //
     }
 
     /**

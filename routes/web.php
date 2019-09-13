@@ -30,3 +30,7 @@ Route::get('/pspots/create/{id}', 'PSpotsController@create');
 Route::post('/pspots/store', 'PSpotsController@store');
 
 Route::resource('pspots', 'PSpotsController');
+
+Route::get('/editProfile', 'HomeController@editProfile');
+
+Route::match(['put', 'patch'], '/home/{home}', 'HomeController@updateProfile');

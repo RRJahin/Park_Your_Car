@@ -174,24 +174,37 @@
 
     <nav class="navbar  navbar-fixed-top navbar-expand-lg navbar-light " style="background-color: #e3f2fd" ;>
 
-        <a class="navbar-brand" href="#">ParkYourCar</a>
+        <a class="navbar-brand" href="#">Park Your Car</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                    Logout
-                </a>
+            <ul class="nav navbar-nav">
+                
+                @if (Auth::guest())
+                  <li><a href="{{ route('login') }}">Login</a></li>
+                @else
+                  
+                  <li>
+                  <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                      document.getElementById('logout-form').submit();">
+                      Logout
+                  </a>
+                  </li>
+                
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                      {{ csrf_field() }}
+                  </form>
 
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    {{ csrf_field() }}
-                </form>
+                  <li>
+                    <a href="/editProfile">Edit Profile</a>
+                  </li>
+                @endif
             </ul>
         </div>
-        <div class="pac-card" id="pac-card">
+        <div class="col-sm-6">
+        <div class="card" id="card"  style="width: 80rem;" >
           <div>
             <div id="title">
               Autocomplete search
@@ -201,10 +214,11 @@
             </div>
 
           </div>
-          <div id="pac-container">
+          <div id="pac-container" >
             <input id="pac-input" type="text"
                 placeholder="Enter a location">
           </div>
+        </div>
         </div>
 
     </nav>

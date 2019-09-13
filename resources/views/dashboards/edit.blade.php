@@ -5,10 +5,8 @@
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <h1>Edit Profile</h1>
-        {!! Form::open(['action' => ['PPlacesController@update', $profile->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-            
-            <input type="hidden" id="role" name="role" value="Parking Place Owner" required autofocus>
-            
+        {!! Form::open(['action' => ['HomeController@updateProfile', $profile->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+  
             <div class="form-group">
                 {{Form::label('first_name', 'First Name')}}
                 {{Form::text('first_name', $profile->first_name, ['class' => 'form-control', 'placeholder' => 'First Name'])}}

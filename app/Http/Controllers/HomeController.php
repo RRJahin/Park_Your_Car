@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 use DB;
 
 class HomeController extends Controller
@@ -43,6 +44,29 @@ class HomeController extends Controller
             return view('dashboards.vehicleOwner')->with('locations', $locations);
         } else {
             return view('dashboards.admin');
+        }
+    }
+
+    public function editProfile()
+    {
+        $profile = User::find(auth()->user()->id);
+        //return ($profile);
+
+        return view('dashboards.edit')->with('profile', $profile);
+    }
+
+    public function updateProfile(Request $request, $id)
+    {
+        $profile = User::find(auth()->user()->id);
+        $profile->first_name = $request->input('first_name');
+        $profile->last_name = $request->input('last_name');
+        $profile->phone = $request->input('phone');
+        $profile->save();
+        //return("Success");
+        if($profile->role == "Parking Place Owner"){
+            return redirect('/pplaces')->with('success', 'Profile Updated');
+        }else{
+            return redirect('/home')->with('success', 'Profile Updated');
         }
     }
 }

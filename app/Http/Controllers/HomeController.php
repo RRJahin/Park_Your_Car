@@ -28,7 +28,16 @@ class HomeController extends Controller
         //dd('hello');
         return view('home');
     }
+    public function showprofile($owner_id)
+  {
+  //$id=auth()->user()->id;
+  $userinfo = DB::table('users')->where('id',$owner_id)->get();
 
+  //return ($pspots);
+
+  $comb = array('userinfo' => $userinfo, 'id' => $owner_id);
+  return view('dashboards.showprofile')->with($comb);
+   }
     public function userHome()
     {
         $id = auth()->user()->id;
@@ -43,7 +52,11 @@ class HomeController extends Controller
             //dd($lat_lng);
             return view('dashboards.vehicleOwner')->with('locations', $locations);
         } else {
-            return view('dashboards.admin');
+          $id=auth()->user()->id;
+          $pplaces = DB::table('p_places')->where('verified_by',NULL)->get();
+          $comb= array('id' => $id,'pplaces'=>$pplaces );
+
+          return view('dashboards.admin')->with($comb);
         }
     }
 

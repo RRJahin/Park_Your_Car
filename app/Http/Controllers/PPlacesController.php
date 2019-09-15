@@ -56,6 +56,8 @@ class PPlacesController extends Controller
         ]);
         // Create Post
         $post = new PPlace;
+        $post->format_address = $request->input('format_address');
+
         $post->address = $request->input('address');
         $post->lat = $request->input('lat');
         $post->lng = $request->input('lng');

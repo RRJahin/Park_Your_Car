@@ -56,6 +56,8 @@ class PPlacesController extends Controller
         ]);
         // Create Post
         $post = new PPlace;
+        $post->format_address = $request->input('format_address');
+
         $post->address = $request->input('address');
         $post->lat = $request->input('lat');
         $post->lng = $request->input('lng');
@@ -73,11 +75,11 @@ class PPlacesController extends Controller
     public function show($id)
     {
         //$pspot = DB::select('select * from p_spots where place_id = '.$id.'');
-        
+
         $pspots = DB::table('p_spots')->where('place_id',$id)->get();
         //return ($pspots);
         $comb = array('pspots' => $pspots, 'id' => $id);
-        
+
         return view('pplaces.show')->with($comb);
     }
 
@@ -94,7 +96,7 @@ class PPlacesController extends Controller
         $pspots = DB::table('p_spots')->where('place_id', $id)->where('vehicle_type', $type)->get();
         //return ($pspots);
         $comb = array('pspots' => $pspots, 'id' => $id);
-        
+
         return view('pplaces.view')->with($comb);
     }
 
@@ -116,10 +118,16 @@ class PPlacesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+     public function update(Request $request, $id)
+     {
+
+       // Create Post
+       $post = PPlace::find($id);
+       $post->verified_by = $request->input('verify');
+       $post->save();
+       return redirect('/home')->with('success', 'Verfied Account');
+
+     }
 
     /**
      * Remove the specified resource from storage.

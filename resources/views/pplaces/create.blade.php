@@ -9,6 +9,8 @@
 <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
 <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
 <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="http://j.maxmind.com/app/geoip.js"></script> <!-- For our fallback -->
 
 @endsection
 
@@ -24,6 +26,8 @@
 
             <input type="hidden" id="lat" name="lat" value="" />
             <input type="hidden" id="lng" name="lng" value="" />
+            <input type="hidden" id="format_address" name="format_address" value="" />
+
             <br>
 
             {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
@@ -113,8 +117,15 @@
 
             document.placeForm.lat.value = dragMarker.getGeometry().lat;
             document.placeForm.lng.value = dragMarker.getGeometry().lng;
+            var geocoder = new google.maps.Geocoder();
+             var yourLocation = new google.maps.LatLng(dragMarker.getGeometry().lat, dragMarker.getGeometry().lng);
+             geocoder.geocode({ 'latLng': yourLocation }, function (results) {
 
-            console.log("Moaz");
+
+            document.placeForm.format_address.value = results[0].formatted_address;
+                 console.log(results[0].formatted_address);
+
+           });
         }, false);
 
         // Listen to the drag event and move the position of the marker
@@ -194,5 +205,6 @@
 
     navigator.geolocation.getCurrentPosition(showPosition);
 </script>
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKWr287U4lff521_5ckycHN3GdkXykA7w&libraries=places&callback=initMap"
+    async defer></script>
 @endsection

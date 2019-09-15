@@ -18,6 +18,7 @@ Route::get('/regAsVehicle', 'WelcomeController@regAsVehicle');
 Route::get('/regAsPPlace', 'WelcomeController@regAsPPlace');
 
 Auth::routes();
+Route::get('/home/showprofile/{owner_id}', 'HomeController@showprofile');
 
 Route::get('/home', 'HomeController@userHome');
 

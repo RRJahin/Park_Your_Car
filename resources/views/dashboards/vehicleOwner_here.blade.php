@@ -25,6 +25,8 @@
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
 
+
+
     <style>
         .sidebar {
             height: 40%;
@@ -461,8 +463,11 @@
             };
 
             // sets map center to current location
+
             map.setCenter(currentLocation);
             map.setZoom(12);
+          
+ });
 
             // puts a draggable marker on current location
             addDraggableMarker(currentLocation, map, behavior);

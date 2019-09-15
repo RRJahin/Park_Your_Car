@@ -22,7 +22,9 @@ Route::get('/home/showprofile/{owner_id}', 'HomeController@showprofile');
 
 Route::get('/home', 'HomeController@userHome');
 
-Route::get('/view/pplaces/{id}', 'PPlacesController@view');
+Route::get('/view/pplaces/{id}/{type}', 'PPlacesController@view');
+
+Route::get('/vhome/{id}', 'HomeController@vHome');
 
 Route::resource('pplaces', 'PPlacesController');
 

@@ -47,10 +47,7 @@ class HomeController extends Controller
             return redirect('/pplaces');
             // return view('dashboards.parkingPlaceOwner');
         } elseif ($role == 'Vehicle Owner') {
-            $locations = DB::table('p_places')->select('id','address','lat', 'lng')
-                                              ->whereNotNull('verified_by')->get();
-            //dd($lat_lng);
-            return view('dashboards.vehicleOwner')->with('locations', $locations);
+            return view('dashboards.vehicleOwnerHome');
         } else {
           $id=auth()->user()->id;
           $pplaces = DB::table('p_places')->where('verified_by',NULL)->get();
@@ -59,6 +56,38 @@ class HomeController extends Controller
           return view('dashboards.admin')->with($comb);
         }
     }
+
+    public function vHome($id)
+    {
+        //return ("Hello");
+        $locations = DB::select( DB::raw("SELECT pp.id,pp.address,pp.lat, pp.lng
+        from p_places pp
+        WHERE pp.verified_by IS NOT NULL 
+        AND (
+            SELECT COUNT(*)
+            from p_spots ps
+            WHERE pp.id = ps.place_id AND ps.vehicle_type = '$id'
+        ) > 0") );
+        
+        //$locations = DB::table('p_places')->select('id','address','lat', 'lng')
+        //                                    ->whereNotNull('verified_by')->get();
+        $comb = array('locations'=> $locations, 'type' => $id);
+        //dd($lat_lng);
+        //return ($locations);
+        return view('dashboards.vehicleOwner')->with($comb);
+    }
+
+    /*
+        SELECT pp.id,pp.address,pp.lat, pp.lng
+from p_places pp
+WHERE pp.verified_by NOT NULL 
+AND (
+	SELECT conut(*)
+	from p_pspots ps
+	WHERE pp.id = ps.place_id
+) > 0
+
+    */
 
     public function editProfile()
     {

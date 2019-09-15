@@ -79,16 +79,16 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Park Your Car
-                    
+                    Park Your Car        
                 </div>
-                @if (Auth::guest())
-                    <h2>Register</h2>
-                    <div class="links">
-                        <a href="/regAsVehicle" style="color=blue">Vehicle Owner</a>
-                        <a href="/regAsPPlace">Parking Place</a>
-                    </div>
-                @endif
+
+                <h2>Vehicle Type</h2>
+                <div class="links">
+                    <a href="/vhome/{{'Car'}}">Car</a>
+                    <a href="/vhome/{{'Motorcycle'}}">Motorcycle</a>
+                    <a href="/vhome/{{'Bus'}}">Bus</a>
+                    <a href="/vhome/{{'Truck'}}">Truck</a>
+                </div>
             </div>
         </div>
 

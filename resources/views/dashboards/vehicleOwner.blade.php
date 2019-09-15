@@ -172,9 +172,9 @@
 
 <body>
 
-    <nav class="navbar  navbar-fixed-top navbar-expand-lg navbar-light " style="background-color: #e3f2fd" ;>
+    <nav class="navbar  navbar-fixed-top navbar-expand-lg navbar-light " style="background-color: #ffffff; height:4rem;" >
 
-        <a class="navbar-brand" href="#">Park Your Car</a>
+        <a class="navbar-brand" href="/home">Park Your Car</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -204,21 +204,17 @@
             </ul>
         </div>
         <div class="col-sm-6">
-        <div class="card" id="card"  style="width: 80rem;" >
           <div>
-            <div id="title">
-              Autocomplete search
-            </div>
+            
             <div id="type-selector" class="pac-controls">
 
             </div>
 
           </div>
-          <div id="pac-container" >
+          <div id="pac-container">
             <input id="pac-input" type="text"
                 placeholder="Enter a location">
           </div>
-        </div>
         </div>
 
     </nav>
@@ -227,7 +223,7 @@
 
     <p id="demo"></p>
 
-    <div id="map"></div>
+    <div class="content" style="margin-top: 50px; height: 100%" id="map"></div>
     <div id="infowindow-content">
       <img src="" width="16" height="16" id="place-icon">
       <span id="place-name"  class="title"></span><br>
@@ -270,7 +266,7 @@
         marker = new google.maps.Marker({
           position: new google.maps.LatLng(locations[i].lat,locations[i].lng),
           map: map,
-          icon: 'image/icon.png',
+          icon: '/image/icon.png',
           title: locations[i].address, // info window
           url: locations[i].id // url to redirect when clicked
         });
@@ -293,7 +289,7 @@
         // Marker Click event 
         google.maps.event.addListener(marker, 'click', (function(marker, i) {
           return function() {
-            window.location.href = "/view/pplaces/" + marker.url;
+            window.location.href = "/view/pplaces/" + marker.url + "/" + "<?php echo $type; ?>";
           }
         })(marker, i));
 

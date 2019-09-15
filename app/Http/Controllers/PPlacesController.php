@@ -87,11 +87,11 @@ class PPlacesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function view($id)
+    public function view($id, $type)
     {
         //$pspot = DB::select('select * from p_spots where place_id = '.$id.'');
         
-        $pspots = DB::table('p_spots')->where('place_id',$id)->get();
+        $pspots = DB::table('p_spots')->where('place_id', $id)->where('vehicle_type', $type)->get();
         //return ($pspots);
         $comb = array('pspots' => $pspots, 'id' => $id);
         

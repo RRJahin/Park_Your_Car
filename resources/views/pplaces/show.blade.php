@@ -3,6 +3,21 @@
 @section('content')
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+            <h1>Parking Place Info</h1>
+            <table class="table">
+                <tbody>
+                    <tr class="d-flex">
+                    <th scope="row" style="width: 25%" > Address</th>
+                    <td>{{$pplace[0]->address}}</td>
+                    </tr>
+                    
+                    <tr class="d-flex">
+                    <th scope="row" style="width: 25%" > Street</th>
+                    <td>{{$pplace[0]->format_address}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
             <h1>Parking Spots</h1>
             @if(count($pspots) > 0)
                 @foreach($pspots as $pspot)

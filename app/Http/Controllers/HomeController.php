@@ -77,18 +77,6 @@ class HomeController extends Controller
         return view('dashboards.vehicleOwner')->with($comb);
     }
 
-    /*
-        SELECT pp.id,pp.address,pp.lat, pp.lng
-from p_places pp
-WHERE pp.verified_by NOT NULL 
-AND (
-	SELECT conut(*)
-	from p_pspots ps
-	WHERE pp.id = ps.place_id
-) > 0
-
-    */
-
     public function editProfile()
     {
         $profile = User::find(auth()->user()->id);

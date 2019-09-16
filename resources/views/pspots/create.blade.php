@@ -15,8 +15,8 @@
             {{Form::text('rent_value', '', ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Rent Fair (per hour)'])}}
             
             {{Form::label('vehicle_type', 'Vehicle Type')}}
-            {{Form::text('vehicle_type', '', ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Vehicle Type'])}}
-            
+            {{Form::select('vehicle_type', array('Car' => 'Car', 'Motorcycle' => 'Motorcycle','Bus' => 'Bus','Truck' => 'Truck'), 'Car', ['class' => 'form-control'])}}
+
             {{Form::label('available', 'Availeble Places')}}
             {{Form::text('available', '', ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Availeble Places'])}}
             

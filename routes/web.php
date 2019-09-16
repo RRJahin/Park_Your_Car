@@ -23,6 +23,7 @@ Route::get('/home/showprofile/{owner_id}', 'HomeController@showprofile');
 Route::get('/home', 'HomeController@userHome');
 
 Route::get('/view/pplaces/{id}/{type}', 'PPlacesController@view');
+Route::get('/admin/viewpplaces/{id}', 'PPlacesController@admin_view');
 
 Route::get('/vhome/{id}', 'HomeController@vHome');
 

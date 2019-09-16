@@ -77,9 +77,10 @@ class PPlacesController extends Controller
         //$pspot = DB::select('select * from p_spots where place_id = '.$id.'');
 
         $pspots = DB::table('p_spots')->where('place_id',$id)->get();
-        //return ($pspots);
-        $comb = array('pspots' => $pspots, 'id' => $id);
-
+        $pplace = DB::table('p_places')->where('id',$id)->get();
+        $comb = array('pplace' => $pplace, 'pspots' => $pspots, 'id' => $id);
+        
+        //return ($comb);
         return view('pplaces.show')->with($comb);
     }
 
@@ -92,12 +93,58 @@ class PPlacesController extends Controller
     public function view($id, $type)
     {
         //$pspot = DB::select('select * from p_spots where place_id = '.$id.'');
+        // Gets Owner ID
+        $owner_id = DB::table('p_places')
+                    ->select('owner_id')
+                    ->where('id', $id)->get()[0]->owner_id;
         
-        $pspots = DB::table('p_spots')->where('place_id', $id)->where('vehicle_type', $type)->get();
-        //return ($pspots);
-        $comb = array('pspots' => $pspots, 'id' => $id);
+        // Gets Owner info
+        $owner_info = DB::table('users')
+                      ->select('first_name','last_name','phone','email')
+                      ->where('id', $owner_id)->first();
 
-        return view('pplaces.view')->with($comb);
+
+        $place_info = DB::table('p_places')
+                      ->select('address','format_address')
+                      ->where('id', $id)->first();
+
+        $pspots = DB::table('p_spots')->where('place_id', $id)->where('vehicle_type', $type)->get();
+        
+        $arr = array('owner_info' => $owner_info,
+                      'place_info' => $place_info,
+                      'pspots'     => $pspots,
+                      'id'         => $id);
+
+        return view('pplaces.view')->with($arr);
+    }
+
+    public function admin_view($id)
+    {
+        //$pspot = DB::select('select * from p_spots where place_id = '.$id.'');
+        // Gets Owner ID
+        $owner_id = DB::table('p_places')
+                    ->select('owner_id')
+                    ->where('id', $id)->get()[0]->owner_id;
+        
+        // Gets Owner info
+        $owner_info = DB::table('users')
+                      ->select('first_name','last_name','phone','email','nid')
+                      ->where('id', $owner_id)->first();
+
+
+        $place_info = DB::table('p_places')
+                      ->select('id','address','format_address')
+                      ->where('id', $id)->first();
+
+        $pspots = DB::table('p_spots')->where('place_id', $id)->get();
+        
+        $arr = array('owner_info' => $owner_info,
+                      'place_info' => $place_info,
+                      'pspots'     => $pspots,
+                      'admin_id'   => auth()->user()->id);
+
+        
+        return view('pplaces.adminview')->with($arr);
     }
 
     /**
@@ -120,13 +167,10 @@ class PPlacesController extends Controller
      */
      public function update(Request $request, $id)
      {
-
-       // Create Post
-       $post = PPlace::find($id);
-       $post->verified_by = $request->input('verify');
-       $post->save();
-       return redirect('/home')->with('success', 'Verfied Account');
-
+       $place = PPlace::find($id);
+       $place->verified_by = $request->input('verify');
+       $place->save();
+       return redirect('/home')->with('success', 'Parking Place Verfied');
      }
 
     /**
@@ -137,8 +181,8 @@ class PPlacesController extends Controller
      */
     public function destroy($id)
     {
-        $post = PPlace::find($id);
-        $post->delete();
-        return redirect('/pplaces')->with('success', 'Post Removed');
+        $place = PPlace::find($id);
+        $place->delete();
+        return redirect('/home')->with('success', 'Parking Place Removed');
     }
 }

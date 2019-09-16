@@ -10,7 +10,6 @@
 <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
 <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-<script src="http://j.maxmind.com/app/geoip.js"></script> <!-- For our fallback -->
 
 @endsection
 
@@ -27,17 +26,12 @@
             <input type="hidden" id="lat" name="lat" value="" />
             <input type="hidden" id="lng" name="lng" value="" />
             <input type="hidden" id="format_address" name="format_address" value="" />
-
             <br>
-
             {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
-            <br>
-            <br>
-
         </div>
-
         {!! Form::close() !!}
-        <div id="map" style="position:absolute; width:100%; height:100%; background:grey"></div>
+        <h3>Locate Place On Map</h3>
+        <div id="map" style="position:absolute; width:100%; height:130%; background:grey"></div>
     </div>
 </div>
 </div>
@@ -96,6 +90,12 @@
 
         document.placeForm.lat.value = dragMarker.getGeometry().lat;
         document.placeForm.lng.value = dragMarker.getGeometry().lng;
+        var geocoder = new google.maps.Geocoder();
+        var formated_address = new google.maps.LatLng(dragMarker.getGeometry().lat, dragMarker.getGeometry().lng);
+            geocoder.geocode({ 'latLng': formated_address }, function (results) {
+            document.placeForm.format_address.value = results[0].formatted_address;
+            console.log(results[0].formatted_address);
+        });
 
         // disable the default draggability of the underlying map
         // when starting to drag a marker object:
@@ -117,14 +117,12 @@
 
             document.placeForm.lat.value = dragMarker.getGeometry().lat;
             document.placeForm.lng.value = dragMarker.getGeometry().lng;
+            
             var geocoder = new google.maps.Geocoder();
-             var yourLocation = new google.maps.LatLng(dragMarker.getGeometry().lat, dragMarker.getGeometry().lng);
-             geocoder.geocode({ 'latLng': yourLocation }, function (results) {
-
-
-            document.placeForm.format_address.value = results[0].formatted_address;
-                 console.log(results[0].formatted_address);
-
+            var formated_address = new google.maps.LatLng(dragMarker.getGeometry().lat, dragMarker.getGeometry().lng);
+             geocoder.geocode({ 'latLng': formated_address }, function (results) {
+                document.placeForm.format_address.value = results[0].formatted_address;
+                console.log(results[0].formatted_address);
            });
         }, false);
 
@@ -205,6 +203,6 @@
 
     navigator.geolocation.getCurrentPosition(showPosition);
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKWr287U4lff521_5ckycHN3GdkXykA7w&libraries=places&callback=initMap"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKWr287U4lff521_5ckycHN3GdkXykA7w&libraries=places"
     async defer></script>
 @endsection

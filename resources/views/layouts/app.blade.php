@@ -33,7 +33,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ url('/home') }}">
                         Park Your Car
                     </a>
                 </div>
@@ -51,11 +51,9 @@
                         <li><a href="{{ route('login') }}">Login</a></li>
                         @else
                         <li>
-
                             <a href="/editProfile">Edit Profile</a>
                         </li>
                         <li>
-
                             <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                 Logout

@@ -18,7 +18,7 @@
             </div>
             <div class="form-group">
                 {{Form::label('type', 'Vehicle Type')}}
-                {{Form::text('type', $pspot->vehicle_type, ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Vehicle Type'])}}
+                {{Form::select('vehicle_type', array('Car' => 'Car', 'Motorcycle' => 'Motorcycle','Bus' => 'Bus','Truck' => 'Truck'), $pspot->vehicle_type, ['class' => 'form-control'])}}
             </div>
             <div class="form-group">
                     {{Form::label('available', 'Availeble Places')}}

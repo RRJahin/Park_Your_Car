@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\PPlace;
 use App\PSpot;
 use App\User;
+use App\Review;
 use DB;
 
 class PPlacesController extends Controller
@@ -66,6 +67,20 @@ class PPlacesController extends Controller
         return redirect('/pplaces')->with('success', 'Place Added');
     }
 
+    public function storeComment(Request $request)
+    {
+        // Create Comment
+        $post = new Review;
+
+        $post->place_id = $request->input('place_id');
+        $post->comment = $request->input('comment');
+        $post->save();
+
+        $type = $request->input('type');
+
+        return redirect('/view/pplaces/'.$post->place_id.'/'.$type)->with('success', 'Comment Added');
+    }
+
     /**
      * Display the specified resource.
      *
@@ -109,11 +124,18 @@ class PPlacesController extends Controller
                       ->where('id', $id)->first();
 
         $pspots = DB::table('p_spots')->where('place_id', $id)->where('vehicle_type', $type)->get();
+
+        $reviews = DB::select( DB::raw("SELECT u.first_name as first_name, u.last_name as last_name, r.comment as comment
+                                        from review r, users u, p_places p 
+                                        WHERE r.place_id = p.id
+                                        AND p.owner_id = u.id" ) );
         
         $arr = array('owner_info' => $owner_info,
                       'place_info' => $place_info,
                       'pspots'     => $pspots,
-                      'id'         => $id);
+                      'reviews'     => $reviews,
+                      'id'         => $id,
+                      'type'       => $type);
 
         return view('pplaces.view')->with($arr);
     }
@@ -137,10 +159,16 @@ class PPlacesController extends Controller
                       ->where('id', $id)->first();
 
         $pspots = DB::table('p_spots')->where('place_id', $id)->get();
+
+        $reviews = DB::select( DB::raw("SELECT u.first_name as first_name, u.last_name as last_name, r.comment as comment
+                                        from review r, users u, p_places p 
+                                        WHERE r.place_id = p.id
+                                        AND p.owner_id = u.id" ) );
         
         $arr = array('owner_info' => $owner_info,
                       'place_info' => $place_info,
                       'pspots'     => $pspots,
+                      'review'     => $reviews,
                       'admin_id'   => auth()->user()->id);
 
         
